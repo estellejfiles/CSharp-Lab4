@@ -1,0 +1,65 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Guthrie Theater";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center">Gutherie Theater</h1>
+
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5>Current Shows:</h5>
+            <!--create unordered list to display SampleShows-->
+            <ul class="list-group">
+                <!--loop through SampleShows array and display each element as list item-->
+                @for (int i = 0; i < Model.SampleShows.Length; i++) {
+                    <li class="list-group-item">@Model.SampleShows[i]</li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    <!--=if ShowResults is false, display form so user can enter fav shows-->
+    @if (!Model.ShowResults)
+    {
+        <div class="card mt-4">
+            <h5>Add Your Shows:</h5>
+            <!--form to enter fav shows; posts when submit is clicked-->
+            <form method="post">
+                <!--for loop that loops three times-->
+                @for (int i = 0; i < 3; i++) {
+                    <!--display label and input each time loop executes-->
+                    <div class="mb-3">
+                        <label class="form-label">Show #@(i+1)</label>
+                        <input type="text" name="Shows[@i]" class="form-control" required/>
+                    </div>
+                }
+                <!--when button is clicked, form is submitted/posted-->
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    }
+
+    <!--if ShowResults is true, display shows user entered-->
+    @if (Model.ShowResults)
+    {
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5>Your Shows:</h5>
+                <!--unordered list that displays shows user entered-->
+                <ul class="list-group">
+                    <!--loop through each show in array and display as list item-->
+                    @for (int i = 0; i < Model.Shows.Length; i++)
+                    {
+                        <li class="list-group-item">@(i + 1). @Model.Shows[i]</li>
+                    }
+                </ul>
+                <!--gives user option to renter shows-->
+                <p class="text-center mt-3"><a href="/" class="btn btn-primary">Add Different Shows</a></p>
+            </div>
+        </div>
+
+    }
+
+</div>
